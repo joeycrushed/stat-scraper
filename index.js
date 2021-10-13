@@ -13,6 +13,7 @@ const getNFLData = (week, year) => {
         const $ = cheerio.load(html)
         const nflWeekData = []
         
+        
         $('div.section_heading', html).each(function() {
             const week = $(this).find('h2:nth-child(1)').text()
             if(week != "" && week != null) {
@@ -41,11 +42,12 @@ const getNFLData = (week, year) => {
                 gameLink
             })
         })
-        console.log(nflWeekData)
+        console.log(nflWeekData) /* This logs array into the console */
+        return nflWeekData /* this is coming back as undefined if console.log the getNFLData() below */
     }).catch(err => console.log(err))
 }
 
-getNFLData(5, 2021)
+console.log(getNFLData(5,2021))
 
 app.listen(PORT, () => 
     console.log(`server running on PORT ${PORT}`)
