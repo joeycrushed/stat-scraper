@@ -4,15 +4,16 @@ const express = require('express')
 const app = express()
 const cheerio = require('cheerio')
 const axios = require('axios')
-const fs = require('fs')
+const fs = require('fs');
 
-const getNFLData = (week, year) => {
-    axios(`https://www.pro-football-reference.com/years/${year}/week_${week}.htm`)
+
+const getNFLData = async (week, year) => {
+    await axios(`https://www.pro-football-reference.com/years/${year}/week_${week}.htm`)
     .then(response => {
         const html = response.data
-        const $ = cheerio.load(html)
-        const nflWeekData = []
         
+        const nflWeekData = [null]
+        const $ = cheerio.load(html)
         
         $('div.section_heading', html).each(function() {
             const week = $(this).find('h2:nth-child(1)').text()
@@ -42,12 +43,23 @@ const getNFLData = (week, year) => {
                 gameLink
             })
         })
-        console.log(nflWeekData) /* This logs array into the console */
-        return nflWeekData /* this is coming back as undefined if console.log the getNFLData() below */
+        console.log(nflWeekData)
+        writeFile(nflWeekData)
+
     }).catch(err => console.log(err))
 }
 
-console.log(getNFLData(5,2021))
+function writeFile(data) {
+    fs.writeFile(`./stats/nflweekdata.json`, JSON.stringify(data), (err) => {
+        if(err) {
+            console.error(err)
+        } else {
+            console.log("Data Saved in Stats Folder!")
+        }
+    })
+}
+
+getNFLData(5,2021)
 
 app.listen(PORT, () => 
     console.log(`server running on PORT ${PORT}`)
