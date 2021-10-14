@@ -1,7 +1,6 @@
 # NFL Statistic Scraper
 
-I couldn't find a decent API for my NFL statistic application that wasn't behind a paywall - so I decided that I'll create my own API by scraping the data from pro-football-reference. Currently You can dynamically
-input the week number of the american football year and the year to bring back data about that weeks scores.
+I couldn't find a decent API for my NFL statistic application that wasn't behind a paywall - so I decided that I'll create my own API by scraping the data from pro-football-reference. Currently using the scraper you can input the week number of the american football year and the year to bring back data about that weeks scores.
 
 ### Key Functionality
 
